@@ -28,7 +28,7 @@ def create_tables(conn):
         cursor.execute('''CREATE TABLE IF NOT EXISTS phones
                        (phone_id SERIAL PRIMARY KEY NOT NULL,
                        client_id INTEGER NOT NULL REFERENCES clients(client_id),
-                       phone_num VARCHAR(12) NOT NULL UNIQUE CHECK (phone_num ~ '^[0-9]+'))
+                       phone_num VARCHAR(12) CHECK (phone_num ~ '^[0-9+NA]'))
                        ''')
         print('Создание таблицы EMAILS')
         cursor.execute('''CREATE TABLE IF NOT EXISTS emails
@@ -48,6 +48,8 @@ def input_client_data_to_add_phone():
     second_name = input('Введите фамилию:').capitalize().strip()
     client_list.append(second_name)
     phone = input('Введите номер телефона:').strip()
+    if phone == "":
+        phone = 'NA'
     client_list.append(phone)
     return client_list
 
@@ -61,6 +63,8 @@ def input_client_data():
     second_name = input('Введите фамилию:').capitalize().strip()
     client_list.append(second_name)
     phone = input('Введите номер телефона:').strip()
+    if phone == "":
+        phone = 'NA'
     client_list.append(phone)
     email = input('Введите email:').strip()
     client_list.append(email.lower())
@@ -76,6 +80,8 @@ def input_client_data_to_update():
     second_name = input('Введите НОВУЮ фамилию:').capitalize().strip()
     client_list.append(second_name)
     phone = input('Введите НОВЫЙ номер телефона:').strip()
+    if phone == "":
+        phone = 'NA'
     client_list.append(phone)
     email = input('Введите НОВЫЙ email:').strip()
     client_list.append(email.lower())
